@@ -56,10 +56,12 @@ module Qiniu
         header_options.merge!('Authorization' => auth_token) unless auth_token.nil?
         case options[:method]
         when :get
-          response = RestClient.get(url, header_options)
+          # response = RestClient.get(url, header_options)
+          response = EM::HttpRequest.new(url).get, :head => header_options
         when :post
           header_options.merge!(:content_type => options[:content_type])
-          response = RestClient.post(url, data, header_options)
+          # response = RestClient.post(url, data, header_options)
+          response = EM::HttpRequest.new(url).post :body => data, :head => header_options
         end
         code = response.respond_to?(:code) ? response.code.to_i : 0
         unless HTTP.is_response_ok?(code)
