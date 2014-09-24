@@ -33,7 +33,8 @@ module Qiniu
         end
 
         ### 发送请求
-        response = RestClient.get(url, req_headers)
+        # response = RestClient.get(url, req_headers)
+        response = EM::HttpRequest.new(url).get, :head => req_headers
         return response.code.to_i, response.body, response.raw_headers
       rescue => e
         Log.logger.warn "#{e.message} => Qiniu::HTTP.get('#{url}')"
@@ -87,7 +88,8 @@ module Qiniu
         end
 
         ### 发送请求
-        response = RestClient.post(url, req_body, req_headers)
+        # response = RestClient.post(url, req_body, req_headers)
+        response = EM::HttpRequest.new(url).post :body => req_body, :head => req_headers
         return response.code.to_i, response.body, response.raw_headers
       rescue => e
         Log.logger.warn "#{e.message} => Qiniu::HTTP.post('#{url}')"
