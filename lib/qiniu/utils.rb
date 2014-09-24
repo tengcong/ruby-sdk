@@ -57,7 +57,7 @@ module Qiniu
         case options[:method]
         when :get
           # response = RestClient.get(url, header_options)
-          response = EM::HttpRequest.new(url).get, :head => header_options
+          response = EM::HttpRequest.new(url).get :head => header_options
         when :post
           header_options.merge!(:content_type => options[:content_type])
           # response = RestClient.post(url, data, header_options)

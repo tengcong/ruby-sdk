@@ -34,7 +34,7 @@ module Qiniu
 
         ### 发送请求
         # response = RestClient.get(url, req_headers)
-        response = EM::HttpRequest.new(url).get, :head => req_headers
+        response = EM::HttpRequest.new(url).get :head => req_headers
         return response.code.to_i, response.body, response.raw_headers
       rescue => e
         Log.logger.warn "#{e.message} => Qiniu::HTTP.get('#{url}')"
